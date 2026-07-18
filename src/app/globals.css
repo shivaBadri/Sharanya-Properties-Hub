@@ -41,9 +41,9 @@
 }
 
 @layer components {
-  .wrap {
-    @apply mx-auto w-full max-w-wrap px-5 sm:px-6 lg:px-8;
-  }
+ .wrap {
+  @apply mx-auto w-full max-w-wrap px-6 sm:px-8 lg:px-10;
+}
 
   /* The signature: a faint surveyor's plot grid, used on dark hero surfaces */
   .plot-grid {
@@ -69,17 +69,28 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-offset-4;
-  }
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 shadow-sm hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-offset-4;
+ }
   .btn-gold {
-    @apply btn bg-gold text-ink hover:bg-gold-deep hover:text-paper;
-  }
+  @apply btn text-ink;
+  background: linear-gradient(
+    135deg,
+    #D4AF37 0%,
+    #C49A3A 45%,
+    #B7862F 100%
+  );
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(201,161,74,.35);
+}
   .btn-ink {
     @apply btn bg-ink text-paper hover:bg-ink-soft;
   }
-  .btn-ghost {
-    @apply btn border border-line bg-transparent text-ink hover:border-gold hover:text-gold-deep;
-  }
+ .btn-ghost {
+  @apply btn border border-line bg-white/80 backdrop-blur-sm text-ink hover:border-gold hover:text-gold-deep;
+}
   .btn-ghost-light {
     @apply btn border border-white/25 bg-transparent text-paper hover:border-gold hover:text-gold-soft;
   }
