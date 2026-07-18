@@ -89,11 +89,34 @@ export default async function VentureDetail({
       <JsonLd data={jsonLd} />
 
       {/* Hero */}
-      <section className="relative bg-ink text-paper">
-        <div className="absolute inset-0">
-          <Image src={v.cover} alt={v.name} fill priority className="object-cover opacity-30" sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/50" aria-hidden />
-        </div>
+     <section className="relative text-paper">
+  <div className="absolute inset-0">
+    <Image
+      src={v.cover}
+      alt={v.name}
+      fill
+      priority
+      sizes="100vw"
+      className="
+        object-cover
+        object-center
+        opacity-100
+        brightness-105
+        contrast-105
+        saturate-110
+      "
+    />
+
+    <div
+      className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/18 to-transparent"
+      aria-hidden
+    />
+
+    <div
+      className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+      aria-hidden
+    />
+  </div>
         <div className="wrap relative py-14 md:py-20">
           <Link href="/ventures" className="inline-flex items-center gap-1.5 text-sm text-paper/70 hover:text-gold-soft">
             <ArrowLeft className="h-4 w-4" aria-hidden /> All ventures
