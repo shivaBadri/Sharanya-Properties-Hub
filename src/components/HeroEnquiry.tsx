@@ -155,20 +155,67 @@ export default function HeroEnquiry({
 
   return (
     <section className="relative isolate overflow-hidden bg-ink text-paper">
-      <Image
-        src={hero.image || "/ventures/sree-city.jpg"}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-[0.5] [filter:saturate(1.15)_contrast(1.05)]"
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/72 to-ink/95" aria-hidden />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" aria-hidden />
-      <div className="absolute inset-0 plot-grid opacity-50" aria-hidden />
-      <div className="absolute -right-32 top-1/4 h-[28rem] w-[28rem] rounded-full bg-gold/15 blur-3xl" aria-hidden />
-      <div className="absolute -left-24 bottom-0 h-[24rem] w-[24rem] rounded-full bg-[#1f4a7a]/25 blur-3xl" aria-hidden />
+     <Image
+  src={hero.image || "/ventures/sree-city.jpg"}
+  alt="Sharanya Properties Hero"
+  fill
+  priority
+  sizes="100vw"
+  className="
+    object-cover
+    object-center
+    opacity-100
+    brightness-105
+    contrast-105
+    saturate-110
+  "
+/>
 
+{/* Main Overlay */}
+<div
+  className="absolute inset-0 bg-gradient-to-r
+  from-black/45
+  via-black/18
+  to-transparent"
+  aria-hidden
+/>
+
+{/* Bottom fade for smooth transition */}
+<div
+  className="absolute inset-0 bg-gradient-to-t
+  from-black/25
+  via-transparent
+  to-transparent"
+  aria-hidden
+/>
+
+{/* Grid */}
+<div
+  className="absolute inset-0 plot-grid opacity-15"
+  aria-hidden
+/>
+
+{/* Warm glow */}
+<div
+  className="absolute -right-32 top-1/4
+  h-[26rem]
+  w-[26rem]
+  rounded-full
+  bg-gold/10
+  blur-3xl"
+  aria-hidden
+/>
+
+{/* Soft blue glow */}
+<div
+  className="absolute -left-24 bottom-0
+  h-[20rem]
+  w-[20rem]
+  rounded-full
+  bg-sky-700/10
+  blur-3xl"
+  aria-hidden
+/>
       <div className="wrap relative py-14 md:py-20 lg:py-24">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-14">
           {/* ── Left: proposition ─────────────────────────── */}
