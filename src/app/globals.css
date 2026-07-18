@@ -1,0 +1,100 @@
+/* Self-hosted variable fonts (no external network, Vercel-safe) */
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/manrope/index.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Fraunces Variable";
+  --font-sans: "Manrope Variable";
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background: theme("colors.gold.DEFAULT");
+    color: #14171a;
+  }
+
+  /* Visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid theme("colors.gold.deep");
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-wrap px-5 sm:px-6 lg:px-8;
+  }
+
+  /* The signature: a faint surveyor's plot grid, used on dark hero surfaces */
+  .plot-grid {
+    background-image:
+      linear-gradient(to right, rgba(198, 161, 91, 0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(198, 161, 91, 0.10) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .plot-grid-fine {
+    background-image:
+      linear-gradient(to right, rgba(20, 23, 26, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(20, 23, 26, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .eyebrow {
+    @apply font-sans text-xs font-semibold uppercase tracking-eyebrow text-gold-deep;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-offset-4;
+  }
+  .btn-gold {
+    @apply btn bg-gold text-ink hover:bg-gold-deep hover:text-paper;
+  }
+  .btn-ink {
+    @apply btn bg-ink text-paper hover:bg-ink-soft;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-transparent text-ink hover:border-gold hover:text-gold-deep;
+  }
+  .btn-ghost-light {
+    @apply btn border border-white/25 bg-transparent text-paper hover:border-gold hover:text-gold-soft;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-gold-deep after:transition-all after:duration-300 hover:after:w-full;
+  }
+}
+
+/* Respect reduced-motion for CSS + Framer Motion consumers */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

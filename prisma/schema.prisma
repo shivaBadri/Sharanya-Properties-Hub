@@ -1,0 +1,162 @@
+// Production database schema for Sharanya Properties.
+// Run:  npx prisma generate  &&  npx prisma migrate dev --name init
+// Then swap the file-based stores in src/lib/leads.ts for prisma calls.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EMPLOYEE
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  FOLLOW_UP
+  CLOSED
+}
+
+enum VentureStatus {
+  ONGOING
+  UPCOMING
+  READY
+  SOLD_OUT
+}
+
+enum PublishState {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  role          Role      @default(EMPLOYEE)
+  // Fine-grained permissions for EMPLOYEE role, e.g. ["ventures:write","leads:read"]
+  permissions   String[]  @default([])
+  createdAt     DateTime  @default(now())
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id        String     @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  project   String?
+  message   String?
+  status    LeadStatus @default(NEW)
+  source    String?    @default("website")
+  createdAt DateTime   @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Venture {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  name         String
+  location     String
+  city         String        @default("Hyderabad")
+  type         String
+  status       VentureStatus @default(ONGOING)
+  publishState PublishState  @default(PUBLISHED)
+  featured     Boolean       @default(false)
+
+  priceLabel   String        @default("Price on request")
+  tagline      String
+  summary      String
+  extent       String?
+  plots        String?
+  sizeRange    String?
+  mapQuery     String
+
+  highlights   String[]      @default([])
+  amenities    String[]      @default([])
+  approvals    String[]      @default([])
+  connectivity Json?         // [{ label, time }]
+
+  coverImage   String?
+  gallery      Media[]
+  files        DownloadFile[]
+
+  // SEO overrides
+  metaTitle       String?
+  metaDescription String?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status])
+  @@index([featured])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  kind      String   @default("image") // image | video
+  ventureId String?
+  venture   Venture? @relation(fields: [ventureId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+}
+
+model DownloadFile {
+  id            String   @id @default(cuid())
+  label         String
+  category      String   // Brochure | Layout | Document
+  url           String
+  sizeBytes     Int?
+  downloadCount Int      @default(0)
+  ventureId     String?
+  venture       Venture? @relation(fields: [ventureId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  project   String?
+  rating    Int      @default(5)
+  quote     String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Faq {
+  id       String @id @default(cuid())
+  question String
+  answer   String
+  order    Int    @default(0)
+}
+
+// Editable per-page SEO + content blocks managed from the admin "Pages" module.
+model PageContent {
+  id              String  @id @default(cuid())
+  key             String  @unique // e.g. "home", "about"
+  metaTitle       String?
+  metaDescription String?
+  ogImage         String?
+  blocks          Json?
+  updatedAt       DateTime @updatedAt
+}

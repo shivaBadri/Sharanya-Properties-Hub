@@ -1,0 +1,12 @@
+import type { Metadata } from "next";
+import DownloadsManager from "@/components/admin/DownloadsManager";
+
+export const metadata: Metadata = {
+  title: "Admin · Downloads",
+  robots: { index: false, follow: false },
+};
+export const dynamic = "force-dynamic";
+
+export default function DownloadsPage() {
+  return <DownloadsManager />;
+}
